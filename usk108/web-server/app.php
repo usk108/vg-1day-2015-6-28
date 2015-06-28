@@ -24,6 +24,23 @@ $app->post('/messages', function (Request $request) use ($app) {
     $username = isset($data['username']) ? $data['username'] : '';
     $body = isset($data['body']) ? $data['body'] : '';
 
+    //bodyの内容がuranaiだったら
+    if(strcmp($body,'uranai') == 0){
+        //占い結果を擬似乱数で作成
+        $randint = rand(1,10);
+        if($randint < 3){
+            //凶
+            $body = '凶';
+        }else if($randint < 8){
+            //吉
+            $body = '吉';
+        }else if($randint <= 10){
+            //大吉
+            $body = '大吉';
+        }
+        $username = 'bot';
+        //username = "bot", body = 占い結果　に書き換える
+    }
     $createdMessage = $app->createMessage($username, $body, base64_encode(file_get_contents($app['icon_image_path'])));
 
     return $app->json($createdMessage);
