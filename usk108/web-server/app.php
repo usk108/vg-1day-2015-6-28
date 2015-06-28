@@ -43,7 +43,7 @@ $app->post('/messages', function (Request $request) use ($app) {
 	$keyword = $body;
 
 	//取得件数の指定
-	$count = 2;
+	$count = 1;
 
 	//オプションの設定
 	$option = array(

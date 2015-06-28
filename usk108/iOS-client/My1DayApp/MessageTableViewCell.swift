@@ -35,7 +35,12 @@ class MessageTableViewCell: UITableViewCell {
         self.date_created.text = message.date_created
         self.name.text = message.username
         
-        let url = NSURL(string: "http://d1d7kfcb5oumx0.cloudfront.net/articles/images/54ca464dd2f2043d5b001eaa/thumb_10940544_337246106481819_144658739037156183_n.jpg");
+        let url: NSURL?
+        if message.username == "image" {
+            url = NSURL(string: message.body);
+        }else{
+            url = NSURL(string: "http://d1d7kfcb5oumx0.cloudfront.net/articles/images/54ca464dd2f2043d5b001eaa/thumb_10940544_337246106481819_144658739037156183_n.jpg");
+        }
         var err: NSError?;
         var imageData :NSData = NSData(contentsOfURL: url!,options: NSDataReadingOptions.DataReadingMappedIfSafe, error: &err)!;
         var img = UIImage(data:imageData);
