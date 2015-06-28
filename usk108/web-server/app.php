@@ -4,14 +4,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 	//ライブラリを読み込む
-	require_once "./phpFlickr.php";
-
-	//Consumer Key
-	$app_key = "9a85478dce3893784c4087db28f703c0";
-
-	//Consumer Secret
-	$app_secret = "secret
-47a853bedd2bb019";
+	require_once __DIR__ . "/phpFlickr.php";
 
 
 
@@ -37,14 +30,20 @@ $app->post('/messages', function (Request $request) use ($app) {
     $body = isset($data['body']) ? $data['body'] : '';
 
   if(strcmp($username,'image') == 0){
-  		//インスタンスを作成する
+    //Consumer Key
+    $app_key = "9a85478dce3893784c4087db28f703c0";
+
+    //Consumer Secret
+    $app_secret = "47a853bedd2bb019";
+
+ 		//インスタンスを作成する
 	$flickr = new phpFlickr( $app_key , $app_secret );
 
 	//検索ワードの指定
-	$keyword = "body";
+	$keyword = $body;
 
 	//取得件数の指定
-	$count = 1;
+	$count = 2;
 
 	//オプションの設定
 	$option = array(
@@ -56,12 +55,15 @@ $app->post('/messages', function (Request $request) use ($app) {
 
 	//検索を実行し、取得したデータを[$result]に代入する
 	$result = $flickr->photos_search($option);
+    var_dump($result);
 
 	//[$result]をJSONに変換する
 	$json = json_encode( $result );
+    var_dump($json);
 
 	//JSONをオブジェクト型に変換する
 	$obj = json_decode( $json );
+    var_dump($obj);
 
 	//ループ処理
 	foreach($obj->photo as $photo){

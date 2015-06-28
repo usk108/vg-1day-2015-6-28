@@ -1107,6 +1107,7 @@ if ( !class_exists('phpFlickr') ) {
 
 			/* https://www.flickr.com/services/api/flickr.photos.search.html */
 			$result = $this->request("flickr.photos.search", $args);
+			var_dump($this->parsed_response);
 			return ($this->parsed_response) ? $this->parsed_response['photos'] : false;
 		}
 
