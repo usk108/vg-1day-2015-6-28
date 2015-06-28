@@ -36,6 +36,7 @@ function appendMessages(data) {
 function appendMessage(message) {
 	var escapeBody = $("<div/>").text(message.body).html();
 	var escapeIcon = $("<div/>").text(message.icon).html();
+    var checkTime = $("<div/>").text(message.created_at).html();
 
     var messageHTML = '<tr><td>' +
         '<div class="media message">'　+
@@ -44,7 +45,8 @@ function appendMessage(message) {
         '</div>' +
         '<div class="media-body">' +
         '<h4 class="media-heading"></h4>' +
-        escapeBody +
+        escapeBody + '<br/><br/>' + checkTime +
+        '</div>'
 	    '</div>' +
         '</div>' +
         '</td></tr>';
