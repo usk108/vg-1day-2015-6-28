@@ -16,6 +16,13 @@ class Message {
     let date_created: String!
     let username: String!
     
+    /*
+    let url = NSURL.URLWithString("http://swift-salaryman.com/files/image/page_top.gif");
+    var err: NSError?;
+    var imageData = NSData.dataWithContentsOfURL(url,options: NSDataReadingOptions.DataReadingMappedIfSafe, error: &err);
+    var img = UIImage(data:imageData);
+    */
+    
     init?(dictionary: [String: AnyObject]) {
         // Mission1-1 Dictionary から key:created_at の値を取得
         if let identifier = dictionary["id"] as? Int, body = dictionary["body"] as? String, icon = dictionary["icon"] as? String, date_created = dictionary["created_at"] as? String, username = dictionary["username"] as? String{
