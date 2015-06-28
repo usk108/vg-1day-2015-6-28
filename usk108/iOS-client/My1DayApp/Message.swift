@@ -14,21 +14,24 @@ class Message {
     let icon: UIImage?
     // Mission1-1. created_at 用のインスタンス変数を追加
     let date_created: String!
+    let username: String!
     
     init?(dictionary: [String: AnyObject]) {
         // Mission1-1 Dictionary から key:created_at の値を取得
-        if let identifier = dictionary["id"] as? Int, body = dictionary["body"] as? String, icon = dictionary["icon"] as? String, date_created = dictionary["created_at"] as? String{
+        if let identifier = dictionary["id"] as? Int, body = dictionary["body"] as? String, icon = dictionary["icon"] as? String, date_created = dictionary["created_at"] as? String, username = dictionary["username"] as? String{
             self.identifier = identifier
             self.body = body
             self.icon = ImageHelper.imageWithBase64EncodedString(icon)
             // Mission1-1 Dictionary から取得した値を created_at 用のインスタンス変数に追加
             self.date_created = date_created
+            self.username = username
         } else {
             self.identifier = nil
             self.body = nil
             self.icon = nil
             // Mission1-1 インスタンス変数を nil で初期化
             self.date_created = nil
+            self.username = nil
             return nil
         }
     }

@@ -14,10 +14,13 @@ class MessageTableViewCell: UITableViewCell {
     // Mission1-1 UILabel のインスタンス変数を追加
     @IBOutlet weak var date_created: UILabel!
     
+    @IBOutlet weak var name: UILabel!
+    
     override func prepareForReuse() {
         self.iconImageView.image = nil
         self.messageLabel.text = nil
-        self.date_created = nil
+        self.date_created.text = nil
+        self.name.text = nil
         // Mission1-1 UILabel のインスタンス変数を初期化
     }
     
@@ -26,5 +29,6 @@ class MessageTableViewCell: UITableViewCell {
         self.messageLabel.text = message.body
         // Mission1-1 UILabel のインスタンス変数に created_at の値を代入
         self.date_created.text = message.date_created
+        self.name.text = message.username
     }
 }
