@@ -24,8 +24,25 @@ $app->post('/messages', function (Request $request) use ($app) {
     $username = isset($data['username']) ? $data['username'] : '';
     $body = isset($data['body']) ? $data['body'] : '';
 
-    $createdMessage = $app->createMessage($username, $body, base64_encode(file_get_contents($app['icon_image_path'])));
-
+    if($body == "uranai"){
+        $kekka = mt_rand(1, 6);
+        if($kekka == 1){
+            $kekka = "大吉";
+        }else if($kekka == 2){
+            $kekka = "吉";
+        }else if($kekka == 3){
+            $kekka = "中吉";
+        }else if($kekka == 4){
+            $kekka = "小吉";
+        }else if($kekka == 5){
+            $kekka = "凶";
+        }else{
+            $kekka = "大凶";
+        }       
+        $createdMessage = $app->createMessage("bot", $kekka, base64_encode(file_get_contents($app['icon_image_path'])));
+    }else{
+        $createdMessage = $app->createMessage($username, $body, base64_encode(file_get_contents($app['icon_image_path'])));
+    }
     return $app->json($createdMessage);
 });
 
