@@ -3,6 +3,18 @@
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
+	//ライブラリを読み込む
+	require_once "./phpFlickr.php";
+
+	//Consumer Key
+	$app_key = "9a85478dce3893784c4087db28f703c0";
+
+	//Consumer Secret
+	$app_secret = "secret
+47a853bedd2bb019";
+
+
+
 $app = new My1DayServer\Application();
 $app['debug'] = true;
 
@@ -24,6 +36,49 @@ $app->post('/messages', function (Request $request) use ($app) {
     $username = isset($data['username']) ? $data['username'] : '';
     $body = isset($data['body']) ? $data['body'] : '';
 
+  if(strcmp($username,'image') == 0){
+  		//インスタンスを作成する
+	$flickr = new phpFlickr( $app_key , $app_secret );
+
+	//検索ワードの指定
+	$keyword = "body";
+
+	//取得件数の指定
+	$count = 1;
+
+	//オプションの設定
+	$option = array(
+		"text" => $keyword,
+		"per_page" => $count,
+		"extras" => "url_m",
+		"safe_search" => 1,
+	);
+
+	//検索を実行し、取得したデータを[$result]に代入する
+	$result = $flickr->photos_search($option);
+
+	//[$result]をJSONに変換する
+	$json = json_encode( $result );
+
+	//JSONをオブジェクト型に変換する
+	$obj = json_decode( $json );
+
+	//ループ処理
+	foreach($obj->photo as $photo){
+
+		//データの整理
+		$body = $photo->url_m;		//画像ファイルのURL
+		
+		//出力する
+		//echo '<img src="' . $src . '" width="' . $width . '" height="' . $height . '"/><br/>';
+		 $createdMessage = $app->createMessage($username, $body, base64_encode(file_get_contents($app['icon_image_path'])));
+
+	}
+	
+	return $app->json($createdMessage);
+  }else{
+  	
+
     //bodyの内容がuranaiだったら
     if(strcmp($body,'uranai') == 0){
         //占い結果を擬似乱数で作成
@@ -44,6 +99,7 @@ $app->post('/messages', function (Request $request) use ($app) {
     $createdMessage = $app->createMessage($username, $body, base64_encode(file_get_contents($app['icon_image_path'])));
 
     return $app->json($createdMessage);
+  }
 });
 
 $app->delete('/messages/{id}', function ($id) use ($app) {
