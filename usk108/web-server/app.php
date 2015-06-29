@@ -31,10 +31,10 @@ $app->post('/messages', function (Request $request) use ($app) {
 
   if(strcmp($username,'image') == 0){
     //Consumer Key
-    $app_key = "9a85478dce3893784c4087db28f703c0";
+    $app_key = CONSUMER_KEY;
 
     //Consumer Secret
-    $app_secret = "47a853bedd2bb019";
+    $app_secret = CONSUMER_SECRET;
 
  		//インスタンスを作成する
 	$flickr = new phpFlickr( $app_key , $app_secret );
